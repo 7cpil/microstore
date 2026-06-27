@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProductStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  LIMITED
+}
+
+enum ProductType {
+  KEY
+  ACCOUNT
+  SUBSCRIPTION
+  SERVICE
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  DELIVERED
+  CANCELLED
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  orders    Order[]
+  reviews   Review[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  icon     String?
+  order    Int       @default(0)
+  products Product[]
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  description   String?
+  priceIQD      Float
+  priceUSD      Float?
+  priceSAR      Float?
+  image         String?
+  categoryId    String
+  category      Category       @relation(fields: [categoryId], references: [id])
+  status        ProductStatus  @default(IN_STOCK)
+  type          ProductType    @default(KEY)
+  isVisible     Boolean        @default(true)
+  features      String @default("[]")
+  orderItems    OrderItem[]
+  deliveryKeys  DeliveryKey[]
+  reviews       Review[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  totalIQD      Float
+  status        OrderStatus @default(PENDING)
+  paymentMethod String      @default("asia_cell")
+  receiptImage  String?
+  note          String?
+  items         OrderItem[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model OrderItem {
+  id              String       @id @default(cuid())
+  orderId         String
+  order           Order        @relation(fields: [orderId], references: [id])
+  productId       String
+  product         Product      @relation(fields: [productId], references: [id])
+  quantity        Int          @default(1)
+  priceIQDAtPurchase Float
+  deliveryKeyId   String?      @unique
+  deliveryKey     DeliveryKey? @relation(fields: [deliveryKeyId], references: [id])
+  createdAt       DateTime     @default(now())
+}
+
+model DeliveryKey {
+  id          String     @id @default(cuid())
+  productId   String
+  product     Product    @relation(fields: [productId], references: [id])
+  value       String
+  isUsed      Boolean    @default(false)
+  orderItem   OrderItem?
+  deliveredAt DateTime?
+  createdAt   DateTime   @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  rating    Int      @default(5)
+  comment   String?
+  createdAt DateTime @default(now())
+
+  @@unique([productId, userId])
+}
