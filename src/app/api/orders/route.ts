@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { sendDiscordWebhook } from "@/lib/discord";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -34,7 +35,21 @@ export async function POST(req: Request) {
           ),
         },
       },
-      include: { items: true },
+      include: {
+        items: { include: { product: { select: { name: true } } } },
+      },
+    });
+
+    sendDiscordWebhook({
+      id: order.id,
+      user: { name: session.user.name || "", email: session.user.email || "" },
+      totalIQD: order.totalIQD,
+      note: order.note,
+      items: order.items.map((i) => ({
+        product: { name: i.product.name },
+        quantity: i.quantity,
+        priceIQDAtPurchase: i.priceIQDAtPurchase,
+      })),
     });
 
     return NextResponse.json({ order }, { status: 201 });

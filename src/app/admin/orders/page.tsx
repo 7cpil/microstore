@@ -6,14 +6,14 @@ import { Check, X, Eye } from "lucide-react";
 
 type Order = {
   id: string;
-  user: { name: string };
+  user: { name: string; email: string };
   totalIQD: number;
   status: string;
   paymentMethod: string;
   receiptImage: string | null;
   note: string | null;
   createdAt: string;
-  items: { id: string; product: { name: string }; quantity: number; priceIQDAtPurchase: number }[];
+  items: { id: string; product: { name: string }; quantity: number; priceIQDAtPurchase: number; deliveryKey: { value: string } | null }[];
 };
 
 export default function AdminOrdersPage() {
@@ -73,6 +73,7 @@ export default function AdminOrdersPage() {
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-3">
                 <span className="font-medium">{order.user.name}</span>
+                <span className="text-xs text-[var(--muted)]">({order.user.email})</span>
                 <span className={`badge ${statusBadge[order.status]}`}>{statusText[order.status]}</span>
               </div>
               <div className="text-sm font-bold">{order.totalIQD.toLocaleString()} د.ع</div>
@@ -99,9 +100,16 @@ export default function AdminOrdersPage() {
             {expanded === order.id && (
               <div className="space-y-1 mb-3">
                 {order.items.map((item) => (
-                  <div key={item.id} className="text-sm flex justify-between py-1 px-2 rounded bg-white/5">
-                    <span>{item.product.name} × {item.quantity}</span>
-                    <span>{(item.priceIQDAtPurchase * item.quantity).toLocaleString()} د.ع</span>
+                  <div key={item.id} className="text-sm py-1 px-2 rounded bg-white/5">
+                    <div className="flex justify-between">
+                      <span>{item.product.name} × {item.quantity}</span>
+                      <span>{(item.priceIQDAtPurchase * item.quantity).toLocaleString()} د.ع</span>
+                    </div>
+                    {item.deliveryKey && (
+                      <div className="text-xs text-green-400 mt-1 font-mono" dir="ltr">
+                        ✅ المفتاح: {item.deliveryKey.value}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
