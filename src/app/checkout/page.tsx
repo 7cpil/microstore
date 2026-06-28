@@ -75,19 +75,15 @@ export default function CheckoutPage() {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("file", receipt);
+      const toBase64 = (file: File): Promise<string> =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+        });
 
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!uploadRes.ok) {
-        throw new Error("فشل رفع الصورة");
-      }
-
-      const { url } = await uploadRes.json();
+      const receiptImage = await toBase64(receipt);
 
       const orderRes = await fetch("/api/orders", {
         method: "POST",
@@ -100,7 +96,7 @@ export default function CheckoutPage() {
           })),
           totalIQD,
           paymentMethod: method,
-          receiptImage: url,
+          receiptImage,
           note,
         }),
       });
