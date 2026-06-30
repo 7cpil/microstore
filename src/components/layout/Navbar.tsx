@@ -52,7 +52,7 @@ export default function Navbar() {
               href="/store"
               className="px-3 py-2 text-sm text-[var(--accent)] hover:bg-[var(--accent-subtle)] rounded-lg transition-all duration-200 font-medium"
             >
-              الكل
+              {t("nav.all")}
             </Link>
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="block px-4 py-2.5 text-sm text-[var(--accent)] hover:bg-[var(--accent-subtle)] rounded-lg transition-all font-medium"
             >
-              جميع المنتجات
+              {t("store.title")}
             </Link>
           </div>
         </div>
