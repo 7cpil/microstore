@@ -9,6 +9,7 @@ export default function AdminSettingsPage() {
   const [contact, setContact] = useState({
     contact_discord: "https://discord.gg/DjkMF3dcZ",
     contact_whatsapp: "07721830415",
+    contact_whatsapp2: "07731521412",
   });
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +18,7 @@ export default function AdminSettingsPage() {
       .then((r) => r.json())
       .then((data) => {
         if (data.usd_rate) setRates({ usd_rate: data.usd_rate, sar_rate: data.sar_rate || "349" });
-        if (data.contact_discord) setContact({ contact_discord: data.contact_discord, contact_whatsapp: data.contact_whatsapp || "" });
+        if (data.contact_discord) setContact({ contact_discord: data.contact_discord, contact_whatsapp: data.contact_whatsapp || "", contact_whatsapp2: data.contact_whatsapp2 || "" });
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -98,12 +99,21 @@ export default function AdminSettingsPage() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1.5">رقم الواتساب</label>
+          <label className="block text-sm font-medium mb-1.5">رقم الواتساب 1</label>
           <input
             type="text"
             className="input"
             value={contact.contact_whatsapp}
             onChange={(e) => setContact({ ...contact, contact_whatsapp: e.target.value })}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1.5">رقم الواتساب 2</label>
+          <input
+            type="text"
+            className="input"
+            value={contact.contact_whatsapp2}
+            onChange={(e) => setContact({ ...contact, contact_whatsapp2: e.target.value })}
           />
         </div>
         <button onClick={handleSaveContact} className="btn btn-primary">

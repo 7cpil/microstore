@@ -21,6 +21,7 @@ export default function CheckoutPage() {
   const [contactInfo, setContactInfo] = useState({
     contact_discord: "https://discord.gg/DjkMF3dcZ",
     contact_whatsapp: "07721830415",
+    contact_whatsapp2: "07731521412",
   });
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function CheckoutPage() {
         if (data.contact_discord) setContactInfo({
           contact_discord: data.contact_discord,
           contact_whatsapp: data.contact_whatsapp || "",
+          contact_whatsapp2: data.contact_whatsapp2 || "",
         });
       })
       .catch(() => {});
@@ -179,6 +181,9 @@ export default function CheckoutPage() {
                    <a href={contactInfo.contact_discord} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">{t("checkout.discord")}</a>
                   {contactInfo.contact_whatsapp && (
                     <> | <a href={`https://wa.me/${contactInfo.contact_whatsapp.replace(/^0+/, "964")}`} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">{t("checkout.whatsapp")}: {contactInfo.contact_whatsapp}</a></>
+                  )}
+                  {contactInfo.contact_whatsapp2 && (
+                    <> | <a href={`https://wa.me/${contactInfo.contact_whatsapp2.replace(/^0+/, "964")}`} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">{t("checkout.whatsapp")}: {contactInfo.contact_whatsapp2}</a></>
                   )}
                 </div>
               </div>

@@ -46,6 +46,12 @@ export default function Footer() {
                   {t("checkout.whatsapp")}: 07721830415
                 </a>
               </li>
+              <li>
+                <a href="https://wa.me/9647731521412" target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                  {t("checkout.whatsapp")}: 07731521412
+                </a>
+              </li>
             </ul>
           </div>
         </div>

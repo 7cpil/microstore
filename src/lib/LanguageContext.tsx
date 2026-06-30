@@ -23,12 +23,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setMounted(true);
     const saved = localStorage.getItem("lang") as Lang | null;
-    if (saved) setLang(saved);
+    if (saved) {
+      setLang(saved);
+      document.documentElement.lang = saved;
+    }
   }, []);
 
   const handleSetLang = (l: Lang) => {
     setLang(l);
     localStorage.setItem("lang", l);
+    document.documentElement.lang = l;
   };
 
   const t = (key: string): string => {

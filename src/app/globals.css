@@ -43,9 +43,15 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: "Cairo", system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html[lang="ku"] body,
+html[lang="ku"] {
+  letter-spacing: 0.4px;
+  word-spacing: 0.5px;
 }
 
 ::selection {
@@ -387,7 +393,7 @@ select.input {
 .divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 2.5rem 0 1.5rem;
+  margin: 3.5rem 0 1.5rem;
 }
 
 .link-accent {

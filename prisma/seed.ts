@@ -188,6 +188,7 @@ async function main() {
     { key: "sar_rate", value: "349" },
     { key: "contact_discord", value: "https://discord.gg/DjkMF3dcZ" },
     { key: "contact_whatsapp", value: "07721830415" },
+    { key: "contact_whatsapp2", value: "07731521412" },
   ];
 
   for (const s of settings) {
