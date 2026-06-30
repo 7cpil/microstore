@@ -6,6 +6,7 @@ import { toast } from "sonner";
 export type CartItem = {
   productId: string;
   name: string;
+  nameKu?: string | null;
   priceIQD: number;
   image?: string | null;
   quantity: number;

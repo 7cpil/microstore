@@ -78,6 +78,7 @@ export default async function ProductPage({
             <AddToCartButton
               productId={product.id}
               name={product.name}
+              nameKu={product.nameKu}
               priceIQD={product.priceIQD}
               image={product.image}
               slug={product.slug}
