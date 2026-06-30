@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { ShoppingCart, User, Menu, Package, LogOut, ChevronDown, Store, X, Globe } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCurrency } from "@/lib/CurrencyContext";
 import { useCart } from "@/lib/CartContext";
 import { useLang } from "@/lib/LanguageContext";
@@ -22,7 +22,18 @@ export default function Navbar() {
   const { itemCount } = useCart();
   const { lang, setLang, t } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [catMenuOpen, setCatMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50">
@@ -91,22 +102,26 @@ export default function Navbar() {
           </Link>
 
             {session ? (
-            <div className="relative group">
-              <button className="flex items-center gap-1.5 p-2.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-all duration-200">
+            <div className="relative" ref={userMenuRef}>
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-1.5 p-2.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-all duration-200"
+              >
                 <User size={18} />
                 <span className="hidden sm:block text-sm max-w-[90px] truncate">
                   {session.user?.name}
                 </span>
-                <ChevronDown size={14} className="hidden sm:block group-hover:rotate-180 transition-transform duration-200" />
+                <ChevronDown size={14} className={`hidden sm:block transition-transform duration-200 ${userMenuOpen ? "rotate-180" : ""}`} />
               </button>
-              <div className="absolute left-0 top-full mt-1.5 w-52 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl shadow-[var(--shadow-elevated)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+              <div className={`absolute left-0 top-full mt-1.5 w-52 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl shadow-[var(--shadow-elevated)] z-50 overflow-hidden transition-all duration-200 ${userMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
                 <div className="px-4 py-3 border-b border-[var(--border)]">
                   <p className="text-sm font-medium">{session.user?.name}</p>
                   <p className="text-xs text-[var(--text-muted)]">{session.user?.email}</p>
                 </div>
                 <Link
                   href="/orders"
-                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-colors"
+                  onClick={() => setUserMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-colors block w-full text-right"
                 >
                   <Package size={16} />
                   {t("nav.orders")}
@@ -114,7 +129,8 @@ export default function Navbar() {
                 {session.user?.role === "ADMIN" && (
                   <Link
                     href="/admin"
-                    className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-colors"
+                    onClick={() => setUserMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-colors block w-full text-right"
                   >
                     <Store size={16} />
                     {t("nav.admin")}
