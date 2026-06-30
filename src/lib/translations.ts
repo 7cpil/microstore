@@ -144,6 +144,9 @@ const ar: Dict = {
   "confirm": "تأكيد",
   "search": "بحث",
   "close": "إغلاق",
+  "notFound.title": "الصفحة غير موجودة",
+  "notFound.message": "عذرًا، الصفحة التي تبحث عنها غير موجودة.",
+  "notFound.backHome": "العودة إلى الصفحة الرئيسية",
 };
 
 const ku: Dict = {

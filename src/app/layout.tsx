@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SessionProvider from "@/components/SessionProvider";
 import { CurrencyProvider } from "@/lib/CurrencyContext";
-import { LanguageProvider, useLang } from "@/lib/LanguageContext";
+import { LanguageProvider } from "@/lib/LanguageContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "sonner";
@@ -18,9 +18,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { lang } = useLang();
   return (
-    <html lang={lang} dir="rtl">
+    <html lang="ar" dir="rtl">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
