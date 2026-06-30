@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
+import Price from "@/components/Price";
 
 export const dynamic = "force-dynamic";
 
@@ -74,7 +75,7 @@ export default async function CategoryPage({
                 </p>
               )}
               <div className="price">
-                {product.priceIQD.toLocaleString()} د.ع
+                <Price priceIQD={product.priceIQD} />
               </div>
             </Link>
           ))}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import Price from "@/components/Price";
 
 export const dynamic = "force-dynamic";
 
@@ -111,7 +112,7 @@ export default async function HomePage() {
                 </p>
               )}
               <div className="price">
-                {product.priceIQD.toLocaleString()} د.ع
+                <Price priceIQD={product.priceIQD} />
               </div>
             </Link>
           ))}

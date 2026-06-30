@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import AddToCartButton from "./AddToCartButton";
 import ReviewSection from "@/components/ReviewSection";
 import { CheckCircle } from "lucide-react";
+import Price from "@/components/Price";
 
 export const dynamic = "force-dynamic";
 
@@ -78,9 +79,7 @@ export default async function ProductPage({
 
           <div className="mt-auto">
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="price price-lg">
-                {product.priceIQD.toLocaleString()} د.ع
-              </span>
+              <Price priceIQD={product.priceIQD} className="price price-lg" />
             </div>
 
             <AddToCartButton
