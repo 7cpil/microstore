@@ -46,9 +46,20 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "calt" 1, "liga" 1, "rlig" 1, "clig" 1, "dlig" 1, "hlig" 1;
+  font-variant-ligatures: contextual;
+  font-kerning: normal;
 }
 
-/* Kurdish layout uses default Cairo font configurations to support standard cursive character joining */
+/* Enable proper font shaping for Kurdish (Sorani) */
+html[lang="ku"] {
+  font-feature-settings: "calt" 1, "liga" 1, "rlig" 1, "clig" 1, "dlig" 1, "hlig" 1;
+  font-variant-ligatures: contextual;
+  font-kerning: normal;
+  letter-spacing: normal;
+  word-spacing: normal;
+  font-family: "Cairo", system-ui, -apple-system, sans-serif;
+}
 
 ::selection {
   background: var(--accent-subtle);
