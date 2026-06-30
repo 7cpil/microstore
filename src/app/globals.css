@@ -48,10 +48,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html[lang="ku"] body,
 html[lang="ku"] {
-  letter-spacing: 0.4px;
-  word-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  word-spacing: 1px;
+  font-feature-settings: "calt" 0, "liga" 0, "rlig" 0, "clig" 0, "dlig" 0, "hlig" 0;
+  font-variant-ligatures: none;
+  font-kerning: auto;
 }
 
 ::selection {
@@ -393,7 +395,7 @@ select.input {
 .divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 3.5rem 0 1.5rem;
+  margin: 4rem 0 2rem;
 }
 
 .link-accent {

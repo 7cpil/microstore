@@ -9,8 +9,8 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-[var(--border)] mt-16 bg-[var(--bg-secondary)]/50">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="container py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--accent)] to-purple-700 flex items-center justify-center">
@@ -56,7 +56,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="divider" />
-        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-[var(--text-muted)] pt-1">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-[var(--text-muted)] pt-3 pb-2">
           <p>© {new Date().getFullYear()} Micro Store. {t("footer.rights")}</p>
           <p className="text-xs opacity-60">{t("footer.tagline")}</p>
         </div>
