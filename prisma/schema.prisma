@@ -59,6 +59,7 @@ model Product {
   id            String         @id @default(cuid())
   name          String
   nameKu        String?
+  slug          String         @unique
   description   String?
   descriptionKu String?
   features      String @default("[]")
