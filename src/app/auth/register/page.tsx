@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useT } from "@/components/T";
 import { UserPlus } from "lucide-react";
 
 export default function RegisterPage() {
+  const t = useT();
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,7 +31,7 @@ export default function RegisterPage() {
       toast.error(data.error);
       setLoading(false);
     } else {
-      toast.success("تم إنشاء الحساب! سجل الدخول الآن");
+      toast.success(t("auth.registerTitle"));
       router.push("/auth/login");
     }
   };
@@ -41,12 +43,12 @@ export default function RegisterPage() {
           <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[var(--accent)] to-purple-700 flex items-center justify-center shadow-lg shadow-purple-500/20">
             <UserPlus size={24} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold">إنشاء حساب جديد</h1>
-          <p className="text-sm text-[var(--text-muted)] mt-1">انضم إلينا الآن!</p>
+          <h1 className="text-2xl font-bold">{t("auth.registerTitle")}</h1>
+          <p className="text-sm text-[var(--text-muted)] mt-1">{t("auth.register")}</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1.5">الاسم</label>
+            <label className="block text-sm font-medium mb-1.5">{t("auth.name")}</label>
             <input
               type="text"
               className="input"
@@ -57,7 +59,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5">البريد الإلكتروني</label>
+            <label className="block text-sm font-medium mb-1.5">{t("auth.email")}</label>
             <input
               type="email"
               className="input"
@@ -68,7 +70,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5">كلمة المرور</label>
+            <label className="block text-sm font-medium mb-1.5">{t("auth.password")}</label>
             <input
               type="password"
               className="input"
@@ -83,17 +85,17 @@ export default function RegisterPage() {
             {loading ? (
               <span className="flex items-center justify-center gap-2">
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                جاري إنشاء الحساب...
+                {t("loading")}
               </span>
             ) : (
-              "إنشاء حساب"
+              t("auth.register")
             )}
           </button>
         </form>
         <div className="mt-6 pt-4 border-t border-[var(--border)] text-sm text-center">
-          <span className="text-[var(--text-muted)]">لديك حساب؟ </span>
+          <span className="text-[var(--text-muted)]">{t("auth.hasAccount")} </span>
           <Link href="/auth/login" className="text-[var(--accent)] hover:text-[var(--accent-hover)] font-medium transition-colors">
-            تسجيل الدخول
+            {t("auth.login")}
           </Link>
         </div>
       </div>

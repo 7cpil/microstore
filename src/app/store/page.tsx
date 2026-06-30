@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import Price from "@/components/Price";
+import T from "@/components/T";
 
 export const dynamic = "force-dynamic";
 
@@ -18,13 +19,13 @@ export default async function StorePage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">جميع المنتجات</h1>
-        <p className="text-[var(--text-muted)]">تصفح جميع المنتجات الرقمية المتاحة</p>
+        <h1 className="text-3xl font-bold mb-2"><T k="store.title" /></h1>
+        <p className="text-[var(--text-muted)]"><T k="store.desc" /></p>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-8">
         <Link href="/store" className="btn btn-primary btn-sm">
-          الكل
+          <T k="nav.all" />
         </Link>
         {categories.map((cat) => (
           <Link
@@ -39,7 +40,7 @@ export default async function StorePage() {
 
       {products.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-lg text-[var(--text-muted)]">لا توجد منتجات متاحة حالياً</p>
+          <p className="text-lg text-[var(--text-muted)]"><T k="store.empty" /></p>
         </div>
       ) : (
         <div className="product-grid">
@@ -60,8 +61,8 @@ export default async function StorePage() {
                     product.status === "IN_STOCK" ? "badge-green" :
                     product.status === "LIMITED" ? "badge-yellow" : "badge-red"
                   }`}>
-                    {product.status === "IN_STOCK" ? "متوفر" :
-                     product.status === "LIMITED" ? "محدود" : "نفد"}
+                    {product.status === "IN_STOCK" ? <T k="product.inStock" /> :
+                     product.status === "LIMITED" ? <T k="product.limited" /> : <T k="product.outOfStock" />}
                   </span>
                 </div>
               </div>

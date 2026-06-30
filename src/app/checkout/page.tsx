@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import { useCart } from "@/lib/CartContext";
 import { useCurrency } from "@/lib/CurrencyContext";
 import { toast } from "sonner";
+import { useT } from "@/components/T";
 import { ArrowLeft, CreditCard, Upload, ShieldCheck, Package, CheckCircle, ChevronLeft } from "lucide-react";
 
 export default function CheckoutPage() {
+  const t = useT();
   const { items, totalIQD, clearCart } = useCart();
   const { convert } = useCurrency();
   const [method, setMethod] = useState<"asia_cell">("asia_cell");
@@ -38,8 +40,8 @@ export default function CheckoutPage() {
         <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[var(--accent-subtle)] flex items-center justify-center">
           <Package size={40} className="text-[var(--accent)]" />
         </div>
-        <p className="text-lg text-[var(--text-muted)] mb-6">السلة فارغة</p>
-        <a href="/store" className="btn btn-primary btn-lg">تصفح المنتجات</a>
+        <p className="text-lg text-[var(--text-muted)] mb-6">{t("cart.empty")}</p>
+        <a href="/store" className="btn btn-primary btn-lg">{t("cart.startShopping")}</a>
       </div>
     );
   }
@@ -50,16 +52,16 @@ export default function CheckoutPage() {
         <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[var(--success-bg)] flex items-center justify-center animate-fade-in-up">
           <ShieldCheck size={44} className="text-[var(--success)]" />
         </div>
-        <h1 className="text-2xl font-bold mb-2">تم استلام طلبك!</h1>
+        <h1 className="text-2xl font-bold mb-2">{t("checkout.success")}</h1>
         <p className="text-[var(--text-muted)] mb-4 leading-relaxed">
-          سيتم مراجعة طلبك من قبل الإدارة وتوصيل المفاتيح بعد تأكيد الدفع.
+          {t("checkout.successDesc")}
         </p>
         <p className="text-sm text-[var(--text-muted)] mb-8">
-          يمكنك متابعة حالة الطلب من صفحة الطلبات
+          {t("checkout.myOrders")}
         </p>
         <div className="flex gap-3 justify-center">
-          <a href="/orders" className="btn btn-primary">طلباتي</a>
-          <a href="/store" className="btn btn-outline">متابعة التسوق</a>
+          <a href="/orders" className="btn btn-primary">{t("checkout.myOrders")}</a>
+          <a href="/store" className="btn btn-outline">{t("checkout.continue")}</a>
         </div>
       </div>
     );
@@ -68,7 +70,7 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!receipt) {
-      toast.error("يرجى رفع صورة الإيصال");
+      toast.error(t("checkout.receiptRequired"));
       return;
     }
 
@@ -108,9 +110,9 @@ export default function CheckoutPage() {
 
       clearCart();
       setOrderCreated(true);
-      toast.success("تم إنشاء الطلب بنجاح!");
+      toast.success(t("checkout.success"));
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "حدث خطأ";
+      const message = err instanceof Error ? err.message : t("error");
       toast.error(message);
     } finally {
       setLoading(false);
@@ -119,7 +121,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-8">إتمام الطلب</h1>
+      <h1 className="text-2xl font-bold mb-8">{t("checkout.title")}</h1>
 
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2 space-y-6">
@@ -128,7 +130,7 @@ export default function CheckoutPage() {
               <div>
                 <h2 className="font-semibold flex items-center gap-2 mb-4">
                   <CreditCard size={18} />
-                  طريقة الدفع
+                  {t("checkout.paymentMethod")}
                 </h2>
                 <div className="space-y-2">
                   <label className="flex items-center gap-3 p-4 rounded-xl border border-[var(--border)] cursor-pointer transition-all duration-200 hover:border-[var(--accent)]/50 has-checked:border-[var(--accent)] has-checked:bg-[var(--accent-subtle)]">
@@ -144,8 +146,8 @@ export default function CheckoutPage() {
                       📱
                     </div>
                     <div className="flex-1">
-                      <div className="text-sm font-medium">آسيا سيل (AsiaCell)</div>
-                      <div className="text-xs text-[var(--text-muted)]">تحويل رصيد أو إرسال كود تعبئة</div>
+                      <div className="text-sm font-medium">{t("checkout.asiaCell")}</div>
+                      <div className="text-xs text-[var(--text-muted)]">{t("checkout.asiaCell")}</div>
                     </div>
                   </label>
                 </div>
@@ -154,14 +156,14 @@ export default function CheckoutPage() {
               <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-5">
                 <h3 className="font-semibold text-sm mb-4 flex items-center gap-2">
                   <span className="text-lg">📋</span>
-                  تعليمات الدفع
+                   <span>{t("checkout.steps")}</span>
                 </h3>
                 <ol className="text-sm text-[var(--text-muted)] space-y-3">
                   {[
-                    "أرسل المبلغ إلى رقم آسيا سيل (سيتم توفيره من قبل الإدارة)",
-                    "بعد التحويل، التقط صورة للإيصال أو انسخ كود التعبئة",
-                    "ارفع الصورة في الحقل أدناه",
-                    "أرسل الطلب وانتظر تأكيد الإدارة",
+                    t("checkout.step2"),
+                    t("checkout.step3"),
+                    t("checkout.step3"),
+                    t("checkout.step4"),
                   ].map((step, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <span className="w-6 h-6 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
@@ -173,9 +175,9 @@ export default function CheckoutPage() {
                 </ol>
                 <div className="mt-4 pt-4 border-t border-amber-500/10 text-xs text-[var(--text-muted)]">
                   للاستفسار:{" "}
-                  <a href={contactInfo.contact_discord} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">ديسكورد</a>
+                   <a href={contactInfo.contact_discord} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">{t("checkout.discord")}</a>
                   {contactInfo.contact_whatsapp && (
-                    <> | <a href={`https://wa.me/${contactInfo.contact_whatsapp.replace(/^0+/, "964")}`} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">واتساب: {contactInfo.contact_whatsapp}</a></>
+                    <> | <a href={`https://wa.me/${contactInfo.contact_whatsapp.replace(/^0+/, "964")}`} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">{t("checkout.whatsapp")}: {contactInfo.contact_whatsapp}</a></>
                   )}
                 </div>
               </div>
@@ -183,8 +185,8 @@ export default function CheckoutPage() {
               <div>
                 <label className="block text-sm font-medium mb-3 flex items-center gap-1.5">
                   <Upload size={16} />
-                  صورة الإيصال
-                  <span className="text-[var(--text-muted)] font-normal">(مطلوبة)</span>
+                  {t("checkout.uploadReceipt")}
+                  <span className="text-[var(--text-muted)] font-normal">({t("checkout.uploadHint")})</span>
                 </label>
                 <div className="border-2 border-dashed border-[var(--border)] rounded-xl p-6 text-center hover:border-[var(--accent)]/50 transition-colors cursor-pointer">
                   {receiptPreview ? (
@@ -195,7 +197,7 @@ export default function CheckoutPage() {
                         onClick={() => { setReceipt(null); setReceiptPreview(null); }}
                         className="mt-3 text-xs text-[var(--danger)] hover:underline bg-[var(--bg-card)] px-3 py-1 rounded-lg"
                       >
-                        إزالة الصورة
+                         {t("cart.remove")}
                       </button>
                     </div>
                   ) : (
@@ -216,8 +218,8 @@ export default function CheckoutPage() {
                         required
                       />
                       <Upload size={36} className="mx-auto mb-3 text-[var(--text-muted)]" />
-                      <span className="text-sm font-medium text-[var(--accent)]">اضغط لرفع صورة الإيصال</span>
-                      <p className="text-xs text-[var(--text-muted)] mt-1">JPG, PNG (أقصى حجم 5MB)</p>
+                      <span className="text-sm font-medium text-[var(--accent)]">{t("checkout.uploadReceipt")}</span>
+                      <p className="text-xs text-[var(--text-muted)] mt-1">JPG, PNG</p>
                     </label>
                   )}
                 </div>
@@ -225,7 +227,7 @@ export default function CheckoutPage() {
 
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  ملاحظة <span className="text-[var(--text-muted)] font-normal">(اختياري)</span>
+                  {t("checkout.note")} <span className="text-[var(--text-muted)] font-normal">({t("checkout.noteHint")})</span>
                 </label>
                 <textarea
                   value={note}
@@ -239,10 +241,10 @@ export default function CheckoutPage() {
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    جاري إرسال الطلب...
+                    {t("checkout.submitting")}
                   </span>
                 ) : (
-                  "تأكيد الطلب"
+                  t("checkout.submit")
                 )}
               </button>
             </div>
@@ -253,7 +255,7 @@ export default function CheckoutPage() {
           <div className="card">
             <h3 className="font-semibold mb-4 flex items-center gap-2 text-sm">
               <Package size={16} />
-              ملخص الطلب
+              {t("checkout.orderSummary")}
             </h3>
             <div className="space-y-3">
               {items.map((item) => (
@@ -267,14 +269,14 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-medium truncate">{item.name}</div>
-                    <div className="text-[10px] text-[var(--text-muted)]">الكمية: {item.quantity}</div>
+                    <div className="text-[10px] text-[var(--text-muted)]">{t("orders.quantity")}: {item.quantity}</div>
                   </div>
                   <div className="text-xs font-medium text-[var(--accent)]">{convert(item.priceIQD * item.quantity)}</div>
                 </div>
               ))}
             </div>
             <div className="mt-4 pt-4 border-t border-[var(--border)] flex items-center justify-between">
-              <span className="text-sm font-bold">المجموع</span>
+              <span className="text-sm font-bold">{t("orders.total")}</span>
               <span className="text-base font-extrabold price">{convert(totalIQD)}</span>
             </div>
           </div>
@@ -282,7 +284,7 @@ export default function CheckoutPage() {
           <div className="card !p-4 text-xs text-[var(--text-muted)]">
             <h4 className="font-semibold mb-3 flex items-center gap-1.5 text-sm text-[var(--text-primary)]">
               <CheckCircle size={14} />
-              معلومات الطلب
+              {t("orders.detail")}
             </h4>
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
@@ -302,7 +304,7 @@ export default function CheckoutPage() {
 
           <a href="/cart" className="btn btn-outline w-full text-sm">
             <ChevronLeft size={14} />
-            العودة إلى السلة
+            {t("cart.startShopping")}
           </a>
         </div>
       </div>

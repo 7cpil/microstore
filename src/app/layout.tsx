@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SessionProvider from "@/components/SessionProvider";
 import { CurrencyProvider } from "@/lib/CurrencyContext";
+import { LanguageProvider } from "@/lib/LanguageContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "sonner";
@@ -26,14 +27,16 @@ export default function RootLayout({
       </head>
       <body>
         <SessionProvider>
-          <CurrencyProvider>
-            <CartProvider>
-              <Navbar />
-              <main className="main-content">{children}</main>
-              <Footer />
-              <Toaster position="top-center" richColors />
-            </CartProvider>
-          </CurrencyProvider>
+          <LanguageProvider>
+            <CurrencyProvider>
+              <CartProvider>
+                <Navbar />
+                <main className="main-content">{children}</main>
+                <Footer />
+                <Toaster position="top-center" richColors />
+              </CartProvider>
+            </CurrencyProvider>
+          </LanguageProvider>
         </SessionProvider>
       </body>
     </html>

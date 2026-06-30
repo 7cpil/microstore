@@ -3,9 +3,11 @@
 import { useCart } from "@/lib/CartContext";
 import { useCurrency } from "@/lib/CurrencyContext";
 import Link from "next/link";
+import { useT } from "@/components/T";
 import { Trash2, ShoppingCart, ArrowLeft, Minus, Plus } from "lucide-react";
 
 export default function CartPage() {
+  const t = useT();
   const { items, removeItem, updateQuantity, totalIQD } = useCart();
   const { convert } = useCurrency();
 
@@ -15,10 +17,10 @@ export default function CartPage() {
         <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[var(--accent-subtle)] flex items-center justify-center">
           <ShoppingCart size={40} className="text-[var(--accent)]" />
         </div>
-        <h1 className="text-2xl font-bold mb-2">السلة فارغة</h1>
-        <p className="text-[var(--text-muted)] mb-8">لم تقم بإضافة أي منتج بعد</p>
+        <h1 className="text-2xl font-bold mb-2">{t("cart.empty")}</h1>
+        <p className="text-[var(--text-muted)] mb-8">{t("cart.startShopping")}</p>
         <Link href="/store" className="btn btn-primary btn-lg">
-          تصفح المنتجات
+          {t("cart.startShopping")}
         </Link>
       </div>
     );
@@ -26,7 +28,7 @@ export default function CartPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">سلة المشتريات</h1>
+      <h1 className="text-2xl font-bold mb-6">{t("cart.title")}</h1>
 
       <div className="space-y-3 mb-6">
         {items.map((item) => (
@@ -79,7 +81,7 @@ export default function CartPage() {
 
       <div className="card bg-gradient-to-br from-[var(--accent-subtle)] to-[var(--bg-card)] border-[var(--accent)]/10">
         <div className="flex items-center justify-between mb-6">
-          <span className="text-lg font-bold">المجموع الكلي</span>
+          <span className="text-lg font-bold">{t("cart.total")}</span>
           <span className="text-2xl font-extrabold price price-lg">
             {convert(totalIQD)}
           </span>
@@ -87,10 +89,10 @@ export default function CartPage() {
         <div className="flex gap-3">
           <Link href="/store" className="btn btn-outline flex-1">
             <ArrowLeft size={16} />
-            متابعة التسوق
+            {t("cart.startShopping")}
           </Link>
           <Link href="/checkout" className="btn btn-primary flex-1 btn-lg">
-            إتمام الطلب
+            {t("cart.checkout")}
           </Link>
         </div>
       </div>

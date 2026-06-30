@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import T from "@/components/T";
 import { Package } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -28,25 +29,18 @@ export default async function OrdersPage() {
     CANCELLED: "badge-red",
   };
 
-  const statusText: Record<string, string> = {
-    PENDING: "قيد المراجعة",
-    PAID: "تم تأكيد الدفع",
-    DELIVERED: "تم التوصيل",
-    CANCELLED: "ملغي",
-  };
-
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-8">طلباتي</h1>
+      <h1 className="text-2xl font-bold mb-8"><T k="orders.title" /></h1>
 
       {orders.length === 0 ? (
         <div className="text-center py-16">
           <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[var(--accent-subtle)] flex items-center justify-center">
             <Package size={40} className="text-[var(--accent)]" />
           </div>
-          <p className="text-lg text-[var(--text-muted)] mb-6">لا توجد طلبات بعد</p>
+          <p className="text-lg text-[var(--text-muted)] mb-6"><T k="orders.empty" /></p>
           <Link href="/store" className="btn btn-primary btn-lg">
-            تسوق الآن
+            <T k="orders.shopNow" />
           </Link>
         </div>
       ) : (
@@ -64,11 +58,14 @@ export default async function OrdersPage() {
                   </span>
                   <span className="text-[var(--text-muted)]">·</span>
                   <span className="text-[var(--text-muted)]">
-                    {order.items.length} منتج
+                    {order.items.length} <T k="orders.product" />
                   </span>
                 </div>
                 <span className={`badge ${statusBadge[order.status]}`}>
-                  {statusText[order.status]}
+                  {order.status === "PENDING" ? <T k="orders.pending" /> :
+                   order.status === "PAID" ? <T k="orders.paid" /> :
+                   order.status === "DELIVERED" ? <T k="orders.delivered" /> :
+                   <T k="orders.cancelled" />}
                 </span>
               </div>
               <div className="space-y-2">
@@ -79,7 +76,7 @@ export default async function OrdersPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium">{item.product.name}</div>
-                      <div className="text-xs text-[var(--text-muted)]">الكمية: {item.quantity}</div>
+                      <div className="text-xs text-[var(--text-muted)]"><T k="orders.quantity" />: {item.quantity}</div>
                     </div>
                     <div className="text-sm font-bold text-[var(--accent)]">
                       {(item.priceIQDAtPurchase * item.quantity).toLocaleString()} د.ع
@@ -89,7 +86,7 @@ export default async function OrdersPage() {
               </div>
               <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border)]">
                 <span className="text-xs text-[var(--text-muted)]">
-                  {order.paymentMethod === "asia_cell" ? "آسيا سيل" : order.paymentMethod}
+                  {order.paymentMethod === "asia_cell" ? <T k="checkout.asiaCell" /> : order.paymentMethod}
                 </span>
                 <span className="font-bold price">
                   {order.totalIQD.toLocaleString()} د.ع

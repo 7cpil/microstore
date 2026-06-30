@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import Price from "@/components/Price";
+import T from "@/components/T";
 
 export const dynamic = "force-dynamic";
 
@@ -28,29 +29,29 @@ export default async function HomePage() {
         <div className="relative px-6 md:px-12 py-12 md:py-20 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--accent-subtle)] border border-[var(--accent)]/20 text-sm text-[var(--accent)] mb-6 animate-fade-in-up">
             <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
-            متجر المنتجات الرقمية
+            <T k="home.hero.subtitle" />
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-            كل ما تحتاجه من
+            <T k="home.hero.title" />
             <br />
-            <span className="gradient-text">المنتجات الرقمية</span>
+            <span className="gradient-text"><T k="home.hero.subtitle" /></span>
           </h1>
           <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-8 leading-relaxed">
-            هاكات، برامج، اشتراكات، وحسابات ألعاب — بأفضل الأسعار وأسرع توصيل
+            <T k="home.hero.desc" />
           </p>
           <div className="flex items-center justify-center gap-4">
             <Link href="/store" className="btn btn-primary btn-lg">
-              تسوق الآن
+              <T k="home.hero.shop" />
             </Link>
             <Link href="/store" className="btn btn-outline btn-lg">
-              تصفح الأقسام
+              <T k="home.hero.browse" />
             </Link>
           </div>
         </div>
       </section>
 
       <section className="mb-12 md:mb-16">
-        <h2 className="section-title">الأقسام</h2>
+        <h2 className="section-title"><T k="home.sections" /></h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {categories.map((cat, i) => (
             <Link
@@ -63,7 +64,7 @@ export default async function HomePage() {
               </div>
               <div className="font-semibold text-sm">{cat.name}</div>
               <div className="text-xs text-[var(--text-muted)] mt-1">
-                {cat._count.products} منتج{cat._count.products !== 1 ? "" : ""}
+                {cat._count.products} <T k="home.products" />
               </div>
             </Link>
           ))}
@@ -72,9 +73,9 @@ export default async function HomePage() {
 
       <section>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="section-title !mb-0">أحدث المنتجات</h2>
+          <h2 className="section-title !mb-0"><T k="home.latest" /></h2>
           <Link href="/store" className="text-sm text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors font-medium">
-            عرض الكل ←
+            <T k="home.viewAll" /> ←
           </Link>
         </div>
         <div className="product-grid">
@@ -95,8 +96,8 @@ export default async function HomePage() {
                     product.status === "IN_STOCK" ? "badge-green" :
                     product.status === "LIMITED" ? "badge-yellow" : "badge-red"
                   }`}>
-                    {product.status === "IN_STOCK" ? "متوفر" :
-                     product.status === "LIMITED" ? "محدود" : "نفد"}
+                    {product.status === "IN_STOCK" ? <T k="product.inStock" /> :
+                     product.status === "LIMITED" ? <T k="product.limited" /> : <T k="product.outOfStock" />}
                   </span>
                 </div>
               </div>

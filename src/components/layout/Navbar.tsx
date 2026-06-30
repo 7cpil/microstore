@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { ShoppingCart, User, Menu, Package, LogOut, ChevronDown, Store, X } from "lucide-react";
+import { ShoppingCart, User, Menu, Package, LogOut, ChevronDown, Store, X, Globe } from "lucide-react";
 import { useState } from "react";
 import { useCurrency } from "@/lib/CurrencyContext";
 import { useCart } from "@/lib/CartContext";
+import { useLang } from "@/lib/LanguageContext";
 
 const categories = [
   { name: "Micro", slug: "micro" },
@@ -18,6 +19,7 @@ export default function Navbar() {
   const { data: session } = useSession();
   const { currency, setCurrency } = useCurrency();
   const { itemCount } = useCart();
+  const { lang, setLang, t } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
   const [catMenuOpen, setCatMenuOpen] = useState(false);
 
@@ -65,10 +67,19 @@ export default function Navbar() {
             <option value="SAR">ر.س</option>
           </select>
 
+          <button
+            onClick={() => setLang(lang === "ar" ? "ku" : "ar")}
+            className="p-2.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-subtle)] transition-all duration-200 text-xs font-bold"
+            aria-label="اللغة"
+            title={lang === "ar" ? "کوردی" : "العربية"}
+          >
+            {lang === "ar" ? "KU" : "AR"}
+          </button>
+
           <Link
             href="/cart"
             className="relative p-2.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-subtle)] transition-all duration-200"
-            aria-label="السلة"
+            aria-label={t("nav.cart")}
           >
             <ShoppingCart size={19} />
             {itemCount > 0 && (
@@ -78,7 +89,7 @@ export default function Navbar() {
             )}
           </Link>
 
-          {session ? (
+            {session ? (
             <div className="relative group">
               <button className="flex items-center gap-1.5 p-2.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-all duration-200">
                 <User size={18} />
@@ -97,7 +108,7 @@ export default function Navbar() {
                   className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-colors"
                 >
                   <Package size={16} />
-                  طلباتي
+                  {t("nav.orders")}
                 </Link>
                 {session.user?.role === "ADMIN" && (
                   <Link
@@ -105,7 +116,7 @@ export default function Navbar() {
                     className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] transition-colors"
                   >
                     <Store size={16} />
-                    لوحة التحكم
+                    {t("nav.admin")}
                   </Link>
                 )}
                 <button
@@ -113,13 +124,13 @@ export default function Navbar() {
                   className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[var(--danger)] hover:bg-[var(--danger-bg)] w-full text-right transition-colors border-t border-[var(--border)]"
                 >
                   <LogOut size={16} />
-                  تسجيل خروج
+                  {t("nav.logout")}
                 </button>
               </div>
             </div>
           ) : (
             <Link href="/auth/login" className="btn btn-primary btn-sm">
-              تسجيل الدخول
+              {t("nav.login")}
             </Link>
           )}
 

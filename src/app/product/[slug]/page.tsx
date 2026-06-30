@@ -4,6 +4,7 @@ import AddToCartButton from "./AddToCartButton";
 import ReviewSection from "@/components/ReviewSection";
 import { CheckCircle } from "lucide-react";
 import Price from "@/components/Price";
+import T from "@/components/T";
 
 export const dynamic = "force-dynamic";
 
@@ -28,12 +29,6 @@ export default async function ProductPage({
     LIMITED: "badge-yellow",
   }[product.status];
 
-  const statusText = {
-    IN_STOCK: "متوفر",
-    OUT_OF_STOCK: "نفد من المخزون",
-    LIMITED: "كمية محدودة",
-  }[product.status];
-
   return (
     <div className="max-w-5xl mx-auto">
       <div className="grid md:grid-cols-2 gap-8 md:gap-12">
@@ -50,7 +45,11 @@ export default async function ProductPage({
             <span className="text-sm text-[var(--text-muted)]">
               {product.category.icon} {product.category.name}
             </span>
-            <span className={`badge ${statusColor}`}>{statusText}</span>
+            <span className={`badge ${statusColor}`}>
+              {product.status === "IN_STOCK" ? <T k="product.inStock" /> :
+               product.status === "OUT_OF_STOCK" ? <T k="product.outOfStock" /> :
+               <T k="product.limited" />}
+            </span>
           </div>
 
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">
@@ -65,7 +64,7 @@ export default async function ProductPage({
 
           {features.length > 0 && (
             <div className="mb-6 p-4 rounded-xl bg-[var(--accent-subtle)] border border-[var(--accent)]/10">
-              <h3 className="font-semibold mb-3 text-sm">المميزات:</h3>
+              <h3 className="font-semibold mb-3 text-sm"><T k="product.features" />:</h3>
               <ul className="space-y-2">
                 {features.map((f, i) => (
                   <li key={i} className="text-sm text-[var(--text-secondary)] flex items-center gap-2">

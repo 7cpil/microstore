@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import Price from "@/components/Price";
+import T from "@/components/T";
 
 export const dynamic = "force-dynamic";
 
@@ -29,17 +30,17 @@ export default async function CategoryPage({
       <div className="mb-8">
         <Link href="/store" className="inline-flex items-center gap-1 text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors mb-3">
           <ArrowRight size={14} />
-          العودة إلى جميع المنتجات
+          <T k="nav.all" />
         </Link>
         <h1 className="text-3xl font-bold">{category.icon} {category.name}</h1>
-        <p className="text-[var(--text-muted)] mt-1">{products.length} منتج{products.length !== 1 ? "" : ""}</p>
+        <p className="text-[var(--text-muted)] mt-1">{products.length} <T k="home.products" /></p>
       </div>
 
       {products.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-lg text-[var(--text-muted)]">لا توجد منتجات في هذا القسم حالياً</p>
+          <p className="text-lg text-[var(--text-muted)]"><T k="store.empty" /></p>
           <Link href="/store" className="btn btn-primary mt-4">
-            تصفح جميع المنتجات
+            <T k="home.hero.browse" />
           </Link>
         </div>
       ) : (
@@ -61,8 +62,8 @@ export default async function CategoryPage({
                     product.status === "IN_STOCK" ? "badge-green" :
                     product.status === "LIMITED" ? "badge-yellow" : "badge-red"
                   }`}>
-                    {product.status === "IN_STOCK" ? "متوفر" :
-                     product.status === "LIMITED" ? "محدود" : "نفد"}
+                    {product.status === "IN_STOCK" ? <T k="product.inStock" /> :
+                     product.status === "LIMITED" ? <T k="product.limited" /> : <T k="product.outOfStock" />}
                   </span>
                 </div>
               </div>
