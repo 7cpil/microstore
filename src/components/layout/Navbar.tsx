@@ -5,6 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { ShoppingCart, User, Menu, Package, LogOut, ChevronDown, Store, X } from "lucide-react";
 import { useState } from "react";
 import { useCurrency } from "@/lib/CurrencyContext";
+import { useCart } from "@/lib/CartContext";
 
 const categories = [
   { name: "Micro", slug: "micro" },
@@ -16,6 +17,7 @@ const categories = [
 export default function Navbar() {
   const { data: session } = useSession();
   const { currency, setCurrency } = useCurrency();
+  const { itemCount } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const [catMenuOpen, setCatMenuOpen] = useState(false);
 
@@ -69,6 +71,11 @@ export default function Navbar() {
             aria-label="السلة"
           >
             <ShoppingCart size={19} />
+            {itemCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-5 h-5 rounded-full bg-[var(--accent)] text-white text-[10px] font-bold flex items-center justify-center shadow-lg shadow-purple-500/30">
+                {itemCount > 9 ? "9+" : itemCount}
+              </span>
+            )}
           </Link>
 
           {session ? (

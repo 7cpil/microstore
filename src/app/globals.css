@@ -387,7 +387,7 @@ select.input {
 .divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 2rem 0;
+  margin: 2.5rem 0 1.5rem;
 }
 
 .link-accent {

@@ -45,7 +45,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="divider" />
-        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-[var(--text-muted)]">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-[var(--text-muted)] pt-1">
           <p>© {new Date().getFullYear()} Micro Store. جميع الحقوق محفوظة.</p>
           <p className="text-xs opacity-60">منتجات رقمية بأسعار تنافسية</p>
         </div>

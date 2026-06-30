@@ -27,13 +27,24 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
   const [rates, setRates] = useState(defaults);
 
   useEffect(() => {
+    const cached = localStorage.getItem("currency_rates");
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (Date.now() - parsed.ts < 3600000) {
+          setRates({ usd: parsed.usd || defaults.usd, sar: parsed.sar || defaults.sar });
+          return;
+        }
+      } catch {}
+    }
+
     fetch("/api/settings")
       .then((r) => r.json())
       .then((data) => {
-        setRates({
-          usd: parseFloat(data.usd_rate) || defaults.usd,
-          sar: parseFloat(data.sar_rate) || defaults.sar,
-        });
+        const usd = parseFloat(data.usd_rate) || defaults.usd;
+        const sar = parseFloat(data.sar_rate) || defaults.sar;
+        setRates({ usd, sar });
+        localStorage.setItem("currency_rates", JSON.stringify({ usd, sar, ts: Date.now() }));
       })
       .catch(() => {});
   }, []);

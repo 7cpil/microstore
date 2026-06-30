@@ -65,6 +65,9 @@ export default function LoginPage() {
               required
               placeholder="••••••••"
             />
+            <Link href="/auth/forgot-password" className="text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors mt-1 block text-left">
+              نسيت كلمة المرور؟
+            </Link>
           </div>
           <button type="submit" className="btn btn-primary w-full btn-lg" disabled={loading}>
             {loading ? (
