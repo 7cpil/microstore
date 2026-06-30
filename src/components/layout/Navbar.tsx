@@ -7,12 +7,13 @@ import { useState } from "react";
 import { useCurrency } from "@/lib/CurrencyContext";
 import { useCart } from "@/lib/CartContext";
 import { useLang } from "@/lib/LanguageContext";
+import TranslatedText from "@/components/TranslatedText";
 
 const categories = [
-  { name: "Micro", slug: "micro" },
-  { name: "جيمينج", slug: "gaming" },
-  { name: "برامج", slug: "software" },
-  { name: "تصميم", slug: "design" },
+  { name: "Micro", slug: "micro", nameKu: "Micro" },
+  { name: "جيمينج", slug: "gaming", nameKu: "گەیمینگ" },
+  { name: "برامج", slug: "software", nameKu: "پرۆگرام" },
+  { name: "تصميم", slug: "design", nameKu: "دیزاین" },
 ];
 
 export default function Navbar() {
@@ -44,7 +45,7 @@ export default function Navbar() {
                 href={`/store/${cat.slug}`}
                 className="px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] rounded-lg transition-all duration-200"
               >
-                {cat.name}
+                <TranslatedText ar={cat.name} ku={cat.nameKu} />
               </Link>
             ))}
             <Link
@@ -154,7 +155,7 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="block px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-subtle)] rounded-lg transition-all"
               >
-                {cat.name}
+                <TranslatedText ar={cat.name} ku={cat.nameKu} />
               </Link>
             ))}
             <Link

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import Price from "@/components/Price";
 import T from "@/components/T";
+import TranslatedText from "@/components/TranslatedText";
 
 export const dynamic = "force-dynamic";
 
@@ -62,7 +63,7 @@ export default async function HomePage() {
               <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-gradient-to-br from-[var(--accent-subtle)] to-purple-900/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
                 {categoryIcons[cat.slug] || "📦"}
               </div>
-              <div className="font-semibold text-sm">{cat.name}</div>
+              <div className="font-semibold text-sm"><TranslatedText ar={cat.name} ku={cat.nameKu} /></div>
               <div className="text-xs text-[var(--text-muted)] mt-1">
                 {cat._count.products} <T k="home.products" />
               </div>
@@ -102,14 +103,14 @@ export default async function HomePage() {
                 </div>
               </div>
               <div className="text-xs text-[var(--text-muted)] mb-1">
-                {product.category.icon} {product.category.name}
+                {product.category.icon} <TranslatedText ar={product.category.name} ku={product.category.nameKu} />
               </div>
               <h3 className="font-semibold mb-1 group-hover:text-[var(--accent)] transition-colors leading-snug">
-                {product.name}
+                <TranslatedText ar={product.name} ku={product.nameKu} />
               </h3>
               {product.description && (
                 <p className="text-xs text-[var(--text-muted)] mb-3 line-clamp-2 leading-relaxed">
-                  {product.description}
+                  <TranslatedText ar={product.description} ku={product.descriptionKu} />
                 </p>
               )}
               <div className="price">

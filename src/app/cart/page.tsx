@@ -4,6 +4,7 @@ import { useCart } from "@/lib/CartContext";
 import { useCurrency } from "@/lib/CurrencyContext";
 import Link from "next/link";
 import { useT } from "@/components/T";
+import TranslatedText from "@/components/TranslatedText";
 import { Trash2, ShoppingCart, ArrowLeft, Minus, Plus } from "lucide-react";
 
 export default function CartPage() {
@@ -45,7 +46,7 @@ export default function CartPage() {
                 href={`/product/${item.slug}`}
                 className="font-semibold text-sm hover:text-[var(--accent)] transition-colors"
               >
-                {item.name}
+                <TranslatedText ar={item.name} ku={item.nameKu} />
               </Link>
               <div className="text-sm price mt-0.5">
                 {convert(item.priceIQD)}

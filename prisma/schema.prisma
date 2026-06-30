@@ -47,6 +47,7 @@ model User {
 model Category {
   id       String    @id @default(cuid())
   name     String
+  nameKu   String?
   slug     String    @unique
   icon     String?
   order    Int       @default(0)
@@ -57,8 +58,11 @@ model Category {
 model Product {
   id            String         @id @default(cuid())
   name          String
-  slug          String         @unique
+  nameKu        String?
   description   String?
+  descriptionKu String?
+  features      String @default("[]")
+  featuresKu    String?
   priceIQD      Float
   priceUSD      Float?
   priceSAR      Float?
@@ -68,7 +72,6 @@ model Product {
   status        ProductStatus  @default(IN_STOCK)
   type          ProductType    @default(KEY)
   isVisible     Boolean        @default(true)
-  features      String @default("[]")
   orderItems    OrderItem[]
   deliveryKeys  DeliveryKey[]
   reviews       Review[]

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import Price from "@/components/Price";
 import T from "@/components/T";
+import TranslatedText from "@/components/TranslatedText";
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +33,7 @@ export default async function CategoryPage({
           <ArrowRight size={14} />
           <T k="nav.all" />
         </Link>
-        <h1 className="text-3xl font-bold">{category.icon} {category.name}</h1>
+        <h1 className="text-3xl font-bold">{category.icon} <TranslatedText ar={category.name} ku={category.nameKu} /></h1>
         <p className="text-[var(--text-muted)] mt-1">{products.length} <T k="home.products" /></p>
       </div>
 
@@ -68,11 +69,11 @@ export default async function CategoryPage({
                 </div>
               </div>
               <h3 className="font-semibold mb-1 group-hover:text-[var(--accent)] transition-colors leading-snug">
-                {product.name}
+                <TranslatedText ar={product.name} ku={product.nameKu} />
               </h3>
               {product.description && (
                 <p className="text-xs text-[var(--text-muted)] mb-3 line-clamp-2 leading-relaxed">
-                  {product.description}
+                  <TranslatedText ar={product.description} ku={product.descriptionKu} />
                 </p>
               )}
               <div className="price">

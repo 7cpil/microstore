@@ -5,6 +5,7 @@ import { useCart } from "@/lib/CartContext";
 import { useCurrency } from "@/lib/CurrencyContext";
 import { toast } from "sonner";
 import { useT } from "@/components/T";
+import TranslatedText from "@/components/TranslatedText";
 import { ArrowLeft, CreditCard, Upload, ShieldCheck, Package, CheckCircle, ChevronLeft } from "lucide-react";
 
 export default function CheckoutPage() {
@@ -268,7 +269,7 @@ export default function CheckoutPage() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium truncate">{item.name}</div>
+                    <div className="text-xs font-medium truncate"><TranslatedText ar={item.name} ku={item.nameKu} /></div>
                     <div className="text-[10px] text-[var(--text-muted)]">{t("orders.quantity")}: {item.quantity}</div>
                   </div>
                   <div className="text-xs font-medium text-[var(--accent)]">{convert(item.priceIQD * item.quantity)}</div>

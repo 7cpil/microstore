@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLang } from "@/lib/LanguageContext";
+import TranslatedText from "@/components/TranslatedText";
 
 export default function Footer() {
   const { t, lang } = useLang();
@@ -24,10 +25,10 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-sm mb-4 text-[var(--text-primary)]">{t("footer.sections")}</h4>
             <ul className="space-y-2.5">
-              <li><Link href="/store/micro" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">Micro</Link></li>
-              <li><Link href="/store/gaming" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">{lang === "ku" ? "گەیمینگ و هاک" : "جيمينج وهاكات"}</Link></li>
-              <li><Link href="/store/software" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">{lang === "ku" ? "پرۆگرام و بەشداربوون" : "برامج واشتراكات"}</Link></li>
-              <li><Link href="/store/design" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">{lang === "ku" ? "مۆنتاژ و دیزاین" : "مونتاج وتصميم"}</Link></li>
+              <li><Link href="/store/micro" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"><TranslatedText ar="Micro" ku="Micro" /></Link></li>
+              <li><Link href="/store/gaming" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"><TranslatedText ar="جيمينج وهاكات" ku="گەیمینگ و هاک" /></Link></li>
+              <li><Link href="/store/software" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"><TranslatedText ar="برامج واشتراكات" ku="پرۆگرام و بەشداربوون" /></Link></li>
+              <li><Link href="/store/design" className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"><TranslatedText ar="مونتاج وتصميم" ku="مۆنتاژ و دیزاین" /></Link></li>
             </ul>
           </div>
           <div>

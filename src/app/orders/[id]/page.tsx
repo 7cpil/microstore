@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import T from "@/components/T";
+import TranslatedText from "@/components/TranslatedText";
 import { notFound, redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -53,7 +54,7 @@ export default async function OrderDetailPage({
             <div key={item.id}>
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="font-medium text-sm">{item.product.name}</div>
+                  <div className="font-medium text-sm"><TranslatedText ar={item.product.name} ku={item.product.nameKu} /></div>
                   <div className="text-xs text-[var(--muted)]"><T k="orders.quantity" />: {item.quantity}</div>
                 </div>
                 <div className="text-sm font-bold">

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import Price from "@/components/Price";
 import T from "@/components/T";
+import TranslatedText from "@/components/TranslatedText";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +34,7 @@ export default async function StorePage() {
             href={`/store/${cat.slug}`}
             className="btn btn-outline btn-sm"
           >
-            {cat.icon} {cat.name}
+            {cat.icon} <TranslatedText ar={cat.name} ku={cat.nameKu} />
           </Link>
         ))}
       </div>
@@ -67,14 +68,14 @@ export default async function StorePage() {
                 </div>
               </div>
               <div className="text-xs text-[var(--text-muted)] mb-1">
-                {product.category.icon} {product.category.name}
+                {product.category.icon} <TranslatedText ar={product.category.name} ku={product.category.nameKu} />
               </div>
               <h3 className="font-semibold mb-1 group-hover:text-[var(--accent)] transition-colors leading-snug">
-                {product.name}
+                <TranslatedText ar={product.name} ku={product.nameKu} />
               </h3>
               {product.description && (
                 <p className="text-xs text-[var(--text-muted)] mb-3 line-clamp-2 leading-relaxed">
-                  {product.description}
+                  <TranslatedText ar={product.description} ku={product.descriptionKu} />
                 </p>
               )}
               <div className="price">

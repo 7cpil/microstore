@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import T from "@/components/T";
+import TranslatedText from "@/components/TranslatedText";
 import { Package } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -75,7 +76,7 @@ export default async function OrdersPage() {
                       🎮
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium">{item.product.name}</div>
+                      <div className="text-sm font-medium"><TranslatedText ar={item.product.name} ku={item.product.nameKu} /></div>
                       <div className="text-xs text-[var(--text-muted)]"><T k="orders.quantity" />: {item.quantity}</div>
                     </div>
                     <div className="text-sm font-bold text-[var(--accent)]">
