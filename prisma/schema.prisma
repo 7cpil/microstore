@@ -89,6 +89,8 @@ model Order {
   paymentMethod String      @default("asia_cell")
   receiptImage  String?
   note          String?
+  socialPlatform String?
+  socialHandle   String?
   items         OrderItem[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { items, totalIQD, paymentMethod, receiptImage, note } = await req.json();
+    const { items, totalIQD, paymentMethod, receiptImage, note, socialPlatform, socialHandle } = await req.json();
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "السلة فارغة" }, { status: 400 });
@@ -24,6 +24,8 @@ export async function POST(req: Request) {
         paymentMethod,
         receiptImage,
         note,
+        socialPlatform,
+        socialHandle,
         status: "PENDING",
         items: {
           create: items.map(
@@ -45,6 +47,8 @@ export async function POST(req: Request) {
       user: { name: session.user.name || "", email: session.user.email || "" },
       totalIQD: order.totalIQD,
       note: order.note,
+      socialPlatform: order.socialPlatform || undefined,
+      socialHandle: order.socialHandle || undefined,
       items: order.items.map((i) => ({
         product: { name: i.product.name },
         quantity: i.quantity,

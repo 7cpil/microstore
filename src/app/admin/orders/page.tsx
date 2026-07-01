@@ -12,6 +12,8 @@ type Order = {
   paymentMethod: string;
   receiptImage: string | null;
   note: string | null;
+  socialPlatform: string | null;
+  socialHandle: string | null;
   createdAt: string;
   items: { id: string; product: { name: string }; quantity: number; priceIQDAtPurchase: number; deliveryKey: { value: string } | null }[];
 };
@@ -80,7 +82,7 @@ export default function AdminOrdersPage() {
             </div>
 
             <div className="text-sm text-[var(--muted)] mb-3">
-              {new Date(order.createdAt).toLocaleDateString("ar-IQ")} · {order.paymentMethod === "asia_cell" ? "آسيا سيل" : order.paymentMethod}
+              {new Date(order.createdAt).toLocaleDateString("ar-IQ")} · {order.paymentMethod === "asia_cell" ? "آسيا سيل" : order.paymentMethod === "social" ? `سوشيال ميديا (${order.socialPlatform}: ${order.socialHandle})` : order.paymentMethod}
               {order.note && ` · ملاحظة: ${order.note}`}
             </div>
 

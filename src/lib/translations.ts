@@ -79,6 +79,15 @@ const ar: Dict = {
   "checkout.step2": "حول المبلغ إلى آسيا سيل",
   "checkout.step3": "ارفع صورة الإيصال",
   "checkout.step4": "انتظر تأكيد الطلب",
+  "checkout.social": "السوشيال ميديا",
+  "checkout.socialDesc": "استلم المنتج عبر منصات التواصل",
+  "checkout.choosePlatform": "اختر المنصة",
+  "checkout.socialHandle": "اسم المستخدم أو رابط الحساب",
+  "checkout.socialPlaceholder": "مثال: @username",
+  "checkout.instagram": "إنستغرام",
+  "checkout.tiktok": "تيك توك",
+  "checkout.telegram": "تليكرام",
+  "checkout.facebook": "فيسبوك",
 
   // Orders
   "orders.title": "طلباتي",
@@ -226,6 +235,15 @@ const ku: Dict = {
   "checkout.step2": "بڕە پارەکە بگۆڕە بۆ ئاسیا سێل",
   "checkout.step3": "وێنەی ڕەسید باربکە",
   "checkout.step4": "چاوەڕێی پشتڕاستکردنەوە بکە",
+  "checkout.social": "سۆشیاڵ میدیا",
+  "checkout.socialDesc": "بەرهەمەکە لە ڕێگەی تۆڕە کۆمەڵایەتییەکان وەرگرە",
+  "checkout.choosePlatform": "پلاتفۆرم هەڵبژێرە",
+  "checkout.socialHandle": "ناوی بەکارهێنەر یان ڕێکخراو",
+  "checkout.socialPlaceholder": "نموونە: @username",
+  "checkout.instagram": "ئینستاگرام",
+  "checkout.tiktok": "تیک تۆک",
+  "checkout.telegram": "تێلێگرام",
+  "checkout.facebook": "فەیسبووک",
 
   // Orders
   "orders.title": "داواکارییەکانم",

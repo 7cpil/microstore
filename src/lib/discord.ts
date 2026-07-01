@@ -5,6 +5,8 @@ export async function sendDiscordWebhook(
     totalIQD: number;
     note: string | null;
     items: { product: { name: string }; quantity: number; priceIQDAtPurchase: number }[];
+    socialPlatform?: string;
+    socialHandle?: string;
   }
 ) {
   const webhookUrl =
@@ -21,15 +23,24 @@ export async function sendDiscordWebhook(
     )
     .join("\n");
 
+  const fields: { name: string; value: string; inline?: boolean }[] = [
+    { name: "👤 الزبون", value: `${order.user.name} (${order.user.email})`, inline: true },
+    { name: "💵 المجموع", value: `${order.totalIQD.toLocaleString()} د.ع`, inline: true },
+  ];
+
+  if (order.socialPlatform && order.socialHandle) {
+    fields.push({ name: "🌐 السوشيال ميديا", value: `${order.socialPlatform}: ${order.socialHandle}`, inline: false });
+  }
+
+  fields.push(
+    { name: "📝 ملاحظة", value: order.note || "بدون ملاحظة", inline: false },
+    { name: "📦 المنتجات", value: itemsList || "لا يوجد", inline: false },
+  );
+
   const embed = {
     title: "🛒 طلب جديد",
     color: 0x8b5cf6,
-    fields: [
-      { name: "👤 الزبون", value: `${order.user.name} (${order.user.email})`, inline: true },
-      { name: "💵 المجموع", value: `${order.totalIQD.toLocaleString()} د.ع`, inline: true },
-      { name: "📝 ملاحظة", value: order.note || "بدون ملاحظة", inline: false },
-      { name: "📦 المنتجات", value: itemsList || "لا يوجد", inline: false },
-    ],
+    fields,
     timestamp: new Date().toISOString(),
   };
 
