@@ -1,18 +1,16 @@
 export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-async function checkAdmin() {
-  const session = await getServerSession(authOptions);
-  if (!session || session.user.role !== "ADMIN") throw new Error("Unauthorized");
-}
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    await checkAdmin();
+    const session = await getServerSession(authOptions);
+    if (!session || session.user?.role !== "ADMIN") {
+      return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+    }
     const orders = await prisma.order.findMany({
       orderBy: { createdAt: "desc" },
       include: {
@@ -26,14 +24,18 @@ export async function GET() {
       },
     });
     return NextResponse.json(orders);
-  } catch {
-    return NextResponse.json([]);
+  } catch (err) {
+    console.error("Admin orders error:", err);
+    return NextResponse.json({ error: "فشل تحميل الطلبات" }, { status: 500 });
   }
 }
 
-export async function PUT(req: Request) {
+export async function PUT(req: NextRequest) {
   try {
-    await checkAdmin();
+    const session = await getServerSession(authOptions);
+    if (!session || session.user?.role !== "ADMIN") {
+      return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+    }
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
     if (!id) {
@@ -93,7 +95,8 @@ export async function PUT(req: Request) {
     }
 
     return NextResponse.json({ message: "تم التحديث" });
-  } catch {
+  } catch (err) {
+    console.error("Admin orders update error:", err);
     return NextResponse.json({ error: "فشل" }, { status: 500 });
   }
 }

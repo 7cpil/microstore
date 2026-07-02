@@ -25,8 +25,11 @@ export default function AdminOrdersPage() {
   const load = () => {
     fetch("/api/admin/orders")
       .then((r) => r.json())
-      .then(setOrders)
-      .catch(() => {});
+      .then((data) => {
+        if (Array.isArray(data)) setOrders(data);
+        else toast.error("فشل تحميل الطلبات");
+      })
+      .catch(() => toast.error("فشل تحميل الطلبات"));
   };
 
   useEffect(() => { load(); }, []);
