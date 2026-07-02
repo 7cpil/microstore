@@ -58,7 +58,9 @@ const ar: Dict = {
 
   // Checkout
   "checkout.title": "إتمام الطلب",
-  "checkout.paymentMethod": "طريقة الدفع",
+  "checkout.deliveryMethod": "طريقة الاستلام",
+  "checkout.email": "البريد الإلكتروني",
+  "checkout.emailDesc": "يتم إرسال المنتج إلى بريدك الإلكتروني",
   "checkout.asiaCell": "آسيا سيل",
   "checkout.uploadReceipt": "رفع إيصال الدفع",
   "checkout.uploadHint": "صورة الإيصال بعد التحويل",
@@ -80,7 +82,7 @@ const ar: Dict = {
   "checkout.step3": "ارفع صورة الإيصال",
   "checkout.step4": "انتظر تأكيد الطلب",
   "checkout.social": "السوشيال ميديا",
-  "checkout.socialDesc": "استلم المنتج عبر منصات التواصل",
+  "checkout.socialDesc": "يتم إرسال المنتج عبر منصات التواصل",
   "checkout.choosePlatform": "اختر المنصة",
   "checkout.socialHandle": "اسم المستخدم أو رابط الحساب",
   "checkout.socialPlaceholder": "مثال: @username",
@@ -214,7 +216,9 @@ const ku: Dict = {
 
   // Checkout
   "checkout.title": "تەواوکردنی داواکاری",
-  "checkout.paymentMethod": "شێوازی پێدان",
+  "checkout.deliveryMethod": "شێوازی وەرگرتن",
+  "checkout.email": "ئیمەیڵ",
+  "checkout.emailDesc": "بەرهەمەکە بۆ ئیمەیڵەکەت دەنێردرێت",
   "checkout.asiaCell": "ئاسیا سێل",
   "checkout.uploadReceipt": "وەرگرتنی ڕەسیدی پێدان",
   "checkout.uploadHint": "وێنەی ڕەسیدی پێدان",

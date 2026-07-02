@@ -82,7 +82,7 @@ export default function AdminOrdersPage() {
             </div>
 
             <div className="text-sm text-[var(--muted)] mb-3">
-              {new Date(order.createdAt).toLocaleDateString("ar-IQ")} · {order.paymentMethod === "asia_cell" ? "آسيا سيل" : order.paymentMethod === "social" ? `سوشيال ميديا (${order.socialPlatform}: ${order.socialHandle})` : order.paymentMethod}
+              {new Date(order.createdAt).toLocaleDateString("ar-IQ")} · {order.paymentMethod === "email" ? "بريد إلكتروني" : order.paymentMethod === "social" ? `سوشيال ميديا (${order.socialPlatform}: ${order.socialHandle})` : order.paymentMethod}
               {order.note && ` · ملاحظة: ${order.note}`}
             </div>
 
