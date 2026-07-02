@@ -21,6 +21,7 @@ type Order = {
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [receiptImage, setReceiptImage] = useState<string | null>(null);
 
   const load = () => {
     fetch("/api/admin/orders")
@@ -90,9 +91,9 @@ export default function AdminOrdersPage() {
             </div>
 
             {order.receiptImage && (
-              <a href={order.receiptImage} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--primary)] hover:underline flex items-center gap-1 mb-3">
+              <button onClick={() => setReceiptImage(order.receiptImage!)} className="text-sm text-[var(--primary)] hover:underline flex items-center gap-1 mb-3 cursor-pointer">
                 <Eye size={14} /> عرض الإيصال
-              </a>
+              </button>
             )}
 
             <button
@@ -141,6 +142,15 @@ export default function AdminOrdersPage() {
           <div className="text-center py-8 text-[var(--muted)]">لا توجد طلبات</div>
         )}
       </div>
+
+      {receiptImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setReceiptImage(null)}>
+          <div className="max-w-2xl max-h-[90vh] rounded-xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <img src={receiptImage} alt="الإيصال" className="w-full h-full object-contain" />
+          </div>
+          <button onClick={() => setReceiptImage(null)} className="absolute top-4 left-4 text-white/70 hover:text-white text-2xl">&times;</button>
+        </div>
+      )}
     </div>
   );
 }
